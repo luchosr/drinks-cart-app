@@ -6,10 +6,12 @@ export default function Header() {
   const isHome = useMemo(() => pathname === '/', [pathname]);
 
   const fetchCategories = useAppStore((state) => state.fetchCategories);
+  const { drinks } = useAppStore((state) => state.categories);
 
   useEffect(() => {
     fetchCategories();
   }, []);
+
   return (
     <header
       className={isHome ? 'bg-header bg-center bg-cover' : 'bg-slate-800'}
@@ -73,6 +75,11 @@ export default function Header() {
                 className="p-3 w-full rounded-lg focus:outline-none"
               >
                 <option value=""> -- Seleccione --</option>
+                {drinks?.map((drink) => (
+                  <option key={drink.strCategory} value={drink.strCategory}>
+                    {drink.strCategory}
+                  </option>
+                ))}
               </select>
             </div>
             <input
