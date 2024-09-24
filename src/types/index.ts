@@ -1,4 +1,5 @@
 import {
+  DrinkAPIResponse,
   DrinksAPIResponse,
   searchFilterSchema,
 } from './../utils/recipes-schema';
@@ -8,3 +9,4 @@ import { CategoriesAPIResponseSchema } from '../utils/recipes-schema';
 export type Categories = z.infer<typeof CategoriesAPIResponseSchema>;
 export type SearchFilter = z.infer<typeof searchFilterSchema>;
 export type Drinks = z.infer<typeof DrinksAPIResponse>;
+export type Drink = z.infer<typeof DrinkAPIResponse>;
