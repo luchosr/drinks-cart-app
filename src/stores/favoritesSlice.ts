@@ -4,7 +4,7 @@ import { RecipesSliceType, createRecipesSlice } from './recipeSlice';
 import {
   NotificationSliceType,
   createNotificationSlice,
-} from './NotificationSlice';
+} from './notificationSlice';
 
 export type FavoritesSliceType = {
   favorites: Recipe[];

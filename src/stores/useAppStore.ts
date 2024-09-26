@@ -5,7 +5,7 @@ import { createFavoritesSlice, FavoritesSliceType } from './favoritesSlice';
 import {
   createNotificationSlice,
   NotificationSliceType,
-} from './NotificationSlice';
+} from './notificationSlice';
 
 // aqui se pasa ...a refiriendose a los argumentos set, get, api del store de zustand
 export const useAppStore = create<
