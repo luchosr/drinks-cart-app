@@ -15,9 +15,12 @@ export const createFavoritesSlice: StateCreator<FavoritesSliceType> = (
     if (
       get().favorites.some((favorite) => favorite.idDrink === recipe.idDrink)
     ) {
-      console.log('Recipe already added');
+      set((state) => ({
+        favorites: state.favorites.filter(
+          (favorite) => favorite.idDrink !== recipe.idDrink
+        ),
+      }));
     } else {
-      console.log('Recipe not  added');
       set((state) => ({ favorites: [...state.favorites, recipe] }));
     }
   },
