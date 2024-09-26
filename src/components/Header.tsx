@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAppStore } from '../stores/useAppStore';
 
@@ -7,42 +7,41 @@ export default function Header() {
     ingredient: '',
     category: '',
   });
+
   const { pathname } = useLocation();
   const isHome = useMemo(() => pathname === '/', [pathname]);
 
   const fetchCategories = useAppStore((state) => state.fetchCategories);
-  const { drinks } = useAppStore((state) => state.categories);
+  const categories = useAppStore((state) => state.categories);
   const searchRecipes = useAppStore((state) => state.searchRecipes);
+  const showNotification = useAppStore((state) => state.showNotification);
 
   useEffect(() => {
     fetchCategories();
   }, []);
 
-  const handleChange = useCallback(
-    (
-      e:
-        | React.ChangeEvent<HTMLInputElement>
-        | React.ChangeEvent<HTMLSelectElement>
-    ) => {
-      setSearchFilters({
-        ...searchFilters,
-        [e.target.name]: e.target.value,
-      });
-    },
-    [searchFilters]
-  );
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSearchFilters({
+      ...searchFilters,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  const handleSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      if (Object.values(searchFilters).includes('')) {
-        console.log('Todos los campos son obligatorios');
-        return;
-      }
-      searchRecipes(searchFilters);
-    },
-    [searchFilters]
-  );
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (Object.values(searchFilters).includes('')) {
+      showNotification({
+        text: 'Todos los campos son obligatorios',
+        error: true,
+      });
+      return;
+    }
+    // Consultar las recetas
+    searchRecipes(searchFilters);
+  };
 
   return (
     <header
@@ -50,8 +49,8 @@ export default function Header() {
     >
       <div className="mx-auto container px-5 py-16">
         <div className="flex justify-between items-center">
-          <div className="">
-            <img src="/logo.svg" alt="logotipo" className="w-32" />
+          <div>
+            <img className="w-32" src="/logo.svg" alt="logotipo" />
           </div>
 
           <nav className="flex gap-4">
@@ -59,8 +58,8 @@ export default function Header() {
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? 'uppercase font-bold text-orange-500'
-                  : 'uppercase font-bold text-white'
+                  ? 'text-orange-500 uppercase font-bold'
+                  : 'text-white uppercase font-bold'
               }
             >
               Inicio
@@ -69,14 +68,15 @@ export default function Header() {
               to="/favoritos"
               className={({ isActive }) =>
                 isActive
-                  ? 'uppercase font-bold text-orange-500'
-                  : 'uppercase font-bold text-white'
+                  ? 'text-orange-500 uppercase font-bold'
+                  : 'text-white uppercase font-bold'
               }
             >
               Favoritos
             </NavLink>
           </nav>
         </div>
+
         {isHome && (
           <form
             className="md:w-1/2 2xl:w-1/3 bg-orange-400 my-32 p-10 rounded-lg shadow space-y-6"
@@ -89,12 +89,13 @@ export default function Header() {
               >
                 Nombre o Ingredientes
               </label>
+
               <input
-                type="text"
                 id="ingredient"
+                type="text"
                 name="ingredient"
                 className="p-3 w-full rounded-lg focus:outline-none"
-                placeholder="Ingrese el Nombre o Ingredientes de su bebida"
+                placeholder="Nombre o Ingrediente. Ej. Vodka, Tequila, Café"
                 onChange={handleChange}
                 value={searchFilters.ingredient}
               />
@@ -106,6 +107,7 @@ export default function Header() {
               >
                 Categoría
               </label>
+
               <select
                 id="category"
                 name="category"
@@ -113,10 +115,13 @@ export default function Header() {
                 onChange={handleChange}
                 value={searchFilters.category}
               >
-                <option value=""> -- Seleccione --</option>
-                {drinks?.map((drink) => (
-                  <option key={drink.strCategory} value={drink.strCategory}>
-                    {drink.strCategory}
+                <option value="">-- Seleccione --</option>
+                {categories.drinks.map((category) => (
+                  <option
+                    value={category.strCategory}
+                    key={category.strCategory}
+                  >
+                    {category.strCategory}
                   </option>
                 ))}
               </select>
