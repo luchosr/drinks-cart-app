@@ -10,6 +10,6 @@
 
 - You can clone the repo, make a cd into the project folder and then run `pnpm install` for installing the dependencies, then you can run `pnpm dev` and the project will start on development mode.
 
-- If you want, you can access a project's deployment [here.](https://look-into-crypto.vercel.app/)
+- If you want, you can access a project's deployment [here.](https://friendly-manatee-45e935.netlify.app/)
 
-![Look Into Crypto App Image](./image/Main%20App.png 'Look Into Crypto App Image')
+![Cocktail Recipe Finder App Image](./public/drinks%20recipe%20main.png 'Cocktail Recipe Finder App Image')
