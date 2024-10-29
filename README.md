@@ -4,7 +4,7 @@
 
 - In this app you can put an ingredient or a name of a drink on the input and search on an API database all the recipes related to it.
 
-- This App uses React.js with TypeScript to avoid type-related errors at compile time and React Router for a multi route app, as well as Zustand for sharing data between all components of the app, ZOD for make corrects validations schemas when fetching data from the API, and TailwindCSS for styling as it is a very fast way to apply styles in code.
+- This App was created with `React.js` and `TypeScript` to avoid type-related errors at compile time and `React Router` for a multi route app, as well as `Zustand` for sharing data between all components of the app, `ZOD` for make corrects validations schemas when fetching data from the API, and `TailwindCSS` for styling as it is a very fast way to apply styles in code.
 
 ## How to Install and Run the Project
 
